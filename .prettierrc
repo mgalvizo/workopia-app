@@ -1,0 +1,21 @@
+{
+    "arrowParens": "avoid",
+    "singleQuote": true,
+    "tabWidth": 4,
+    "useTabs": false,
+    "semi": true,
+    "overrides": [
+        {
+            "files": ["*.html"],
+            "options": {
+                "printWidth": 160
+            }
+        },
+        {
+            "files": ["*.yml", "*.yaml"],
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
+}
