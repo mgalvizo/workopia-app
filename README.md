@@ -18,3 +18,6 @@ PHP app that implements the following:
 - Database Class
 - Database configuration
 - Routes configuration
+- Simple autoloader
+- Composer
+- psr-4 for better autoloading

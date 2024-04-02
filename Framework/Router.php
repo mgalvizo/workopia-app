@@ -11,15 +11,22 @@ class Router {
    *
    * @param string $method
    * @param string $uri
-   * @param string $controller
+   * @param string $action
    * @return void
    */
-  public function registerRoute($method, $uri, $controller) {
+  public function registerRoute($method, $uri, $action) {
+    // Creating an array of the controller and the method e.g. ['HomeController', 'index']
+    // list assigns variables as if they were an array (like JavaScript array destructuring)
+    list($controller, $controllerMethod) = explode('@', $action);
+    // inspectAndDie($controller); 
+
+
     // Add entries to the array
     $this->routes[] = [
       'method' => $method,
       'uri' => $uri,
       'controller' => $controller,
+      'controllerMethod' => $controllerMethod,
     ];
   }
 
@@ -90,8 +97,16 @@ class Router {
   public function route($uri, $method) {
     foreach($this->routes as $route) {
       if ($route['uri'] === $uri && $route['method'] === $method) {
-        require basePath('App/' . $route['controller']);
+        // Extract controller and controller method from the array of routes
+        $controller = 'App\\Controllers\\' . $route['controller'];
+        $controllerMethod = $route['controllerMethod'];
+
+        // Instantiate controller and call the method
+        $controller = new $controller();
+        $controller->$controllerMethod();
         return;
+
+        // require basePath('App/' . $route['controller']);
       }
     }
 
