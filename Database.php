@@ -16,7 +16,11 @@ class Database {
     // Array of options for PDO
     $options = [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        // With FETCH_ASSOC we access the data with "[<property-name>]"
+        // PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        
+        // With FETCH_OBJ we access the data with -><property-name>
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ
     ];
 
     try {
