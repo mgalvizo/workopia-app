@@ -1,4 +1,7 @@
 <?php
+// Using the namespace
+use Framework\Database;
+
 // Database config
 $config = require basePath('config/db.php');
 

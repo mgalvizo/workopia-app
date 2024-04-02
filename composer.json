@@ -1,0 +1,18 @@
+{
+  "name": "mgalvizo/workopia-app",
+  "description": "Job listing app",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "Framework\\": "Framework/",
+      "App\\": "App/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Miguel Garcia",
+      "email": "miguelangelgarciaalvizo@hotmail.com"
+    }
+  ],
+  "require": {}
+}

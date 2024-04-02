@@ -1,4 +1,8 @@
 <?php
+// Add the namespace for this class specified in out list of namespaces in composer.json
+// Namespaces avoid conflicts if there is another class with the same name in a different directory
+namespace Framework;
+
 class Router {
   protected $routes = [];
 

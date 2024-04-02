@@ -1,4 +1,13 @@
 <?php
+// Add the namespace for this class specified in out list of namespaces in composer.json
+// Namespaces avoid conflicts if there is another class with the same name in a different directory
+namespace Framework;
+
+// Needed since the app will by default look in the current Framework namespace
+use PDO;
+use PDOException;
+use Exception;
+
 class Database {
   // Property that represents the connection
   public $conn;
