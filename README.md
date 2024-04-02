@@ -8,5 +8,13 @@ Access the app via `http://workopia-app.test/`
 
 PHP app that implements the following:
 
--   Controllers for each route
--   Views for each route
+- Index entry point
+- Controllers for each route
+- Views for each route
+- Public directory for assets and entrypoint
+- Partial files for UI split
+- Helper functions
+- Router Class
+- Database Class
+- Database configuration
+- Routes configuration
