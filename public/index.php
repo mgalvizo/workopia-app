@@ -3,8 +3,18 @@
 <?php
 // Helpers is available for the whole app
 require '../helpers.php';
-require basePath('Database.php');
-require basePath('Router.php');
+// require basePath('Framework/Database.php');
+// require basePath('Framework/Router.php');
+
+// Autoloader allows us to have a bunch of classes in the Framework folder without having to require them individually
+// spl_autoload_register register given function as __autoload() implementation
+spl_autoload_register(function ($class) {
+  $path = basePath('Framework/' . $class . '.php');
+
+  if (file_exists($path)) {
+    require $path;
+  }
+});
 
 // Instantiate router
 $router = new Router();
