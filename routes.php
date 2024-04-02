@@ -3,7 +3,8 @@
 $router->get('/', 'HomeController@index');
 $router->get('/listings', 'ListingController@index');
 $router->get('/listings/create', 'ListingController@create');
-$router->get('/listing', 'ListingController@show');
+// Laravel convention is to use {id} for dynamic segments
+$router->get('/listing/{id}', 'ListingController@show');
 
 // $router->get('/', 'controllers/home.php');
 // $router->get('/listings', 'controllers/listings/index.php');

@@ -95,22 +95,58 @@ class Router {
    * Route the request
    * 
    * @param string $uri
-   * @param string $method
    * @return void
    */
-  public function route($uri, $method) {
+  public function route($uri) {
+    // Get HTTP method
+    $requestMethod = $_SERVER['REQUEST_METHOD'];
+    // inspectAndDie(($method));
+
     foreach($this->routes as $route) {
-      if ($route['uri'] === $uri && $route['method'] === $method) {
+      // Split the current uri into segments
+      // trim strips whitespace (or other characters) from the beginning and end of a string
+      $uriSegments = explode('/', trim($uri, '/'));
+      // inspectAndDie($uriSegments);
+
+      // Split the current iterated route URI into segments
+      $routeSegments = explode('/', trim($route['uri'], '/'));
+      // inspect($routeSegments); // Must use inspect because is an array of data
+
+      $match = true;
+
+      // Check if number of segments matches and the current iterated route method matches the request method
+      if (count($uriSegments) === count($routeSegments) && strtoupper($route['method']) === $requestMethod) {
+        $params = [];
+
+        $match = true;
+
+        for ($i = 0; $i < count($uriSegments); $i++) {
+          // If the uris do NOT match and there is no params
+          // preg_match performs a regular expression match
+          if ($routeSegments[$i] !== $uriSegments[$i] && !preg_match('/\{(.+?)\}/', $routeSegments[$i])) {
+            $match = false;
+            break;
+          }
+
+          // Check for the param and add it to the params array, will map whatever we add as a placeholder in the routes
+          if (preg_match('/\{(.+?)\}/', $routeSegments[$i], $matches)) {
+            // inspectAndDie($matches);
+            // inspectAndDie($uriSegments[$i]);
+            $params[$matches[1]] = $uriSegments[$i];
+            // inspectAndDie($params);
+          }
+        }
+
+        if ($match) {
         // Extract controller and controller method from the array of routes
         $controller = 'App\\Controllers\\' . $route['controller'];
         $controllerMethod = $route['controllerMethod'];
 
         // Instantiate controller and call the method
         $controller = new $controller();
-        $controller->$controllerMethod();
+        $controller->$controllerMethod($params);
         return;
-
-        // require basePath('App/' . $route['controller']);
+        }
       }
     }
 
