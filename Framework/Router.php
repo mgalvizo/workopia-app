@@ -3,6 +3,9 @@
 // Namespaces avoid conflicts if there is another class with the same name in a different directory
 namespace Framework;
 
+// Using the error controller
+use App\Controllers\ErrorController;
+
 class Router {
   protected $routes = [];
 
@@ -74,18 +77,19 @@ class Router {
     $this->registerRoute('DELETE', $uri, $controller);
   }
 
-  /**
-   * Load error page
-   * 
-   * @param int $httpCode
-   * @return void
-   * 
-   */
-  public function error($httpCode = 404) {
-    http_response_code($httpCode);
-    loadView("error/{$httpCode}");
-    exit;
-  }
+  // Not needed since we are using the Errorcontroller now
+  // /**
+  //  * Load error page
+  //  * 
+  //  * @param int $httpCode
+  //  * @return void
+  //  * 
+  //  */
+  // public function error($httpCode = 404) {
+  //   http_response_code($httpCode);
+  //   loadView("error/{$httpCode}");
+  //   exit;
+  // }
 
   /**
    * Route the request
@@ -110,8 +114,11 @@ class Router {
       }
     }
 
+    // Call static methods from the class with scope resolution operator
+    ErrorController::notFound();
+
     // If no routes are matched process error page, 404 is default
-    $this->error();
+    // $this->error();
   }
 }
 ?>
