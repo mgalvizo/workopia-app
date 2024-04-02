@@ -13,7 +13,9 @@ $router = new Router();
 $routes = require basePath('routes.php');
 
 // Get current uri
-$uri = $_SERVER['REQUEST_URI'];
+// We remove the query string (temporarily) for the listing detail page to work with only listing
+// parse_url parses a URL and return its components
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 // inspectAndDie(($uri));
 
 // Get HTTP method
