@@ -5,7 +5,7 @@ require '../helpers.php';
 
 // Basic Routing
 $routes = [
-    '/workopia-app/public/' => 'controllers/home.php',
+    '/' => 'controllers/home.php',
     '/listings' => 'controllers/listings/index.php',
     '/listings/create' => 'controllers/listings/create.php',
     '404' => 'controllers/error/404.php',
