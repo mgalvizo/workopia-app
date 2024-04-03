@@ -1,11 +1,15 @@
 <?php
 // We are passing the controller and the method to register the route
+// Order is important
 $router->get('/', 'HomeController@index');
 $router->get('/listings', 'ListingController@index');
 $router->get('/listings/create', 'ListingController@create');
 // Laravel convention is to use {id} for dynamic segments
+$router->get('/listings/edit/{id}', 'ListingController@edit');
 $router->get('/listings/{id}', 'ListingController@show');
+
 $router->post('/listings', 'ListingController@store');
+$router->put('/listings/{id}', 'ListingController@update');
 $router->delete('/listings/{id}', 'ListingController@destroy');
 
 // $router->get('/', 'controllers/home.php');
