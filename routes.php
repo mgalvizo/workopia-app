@@ -12,6 +12,12 @@ $router->post('/listings', 'ListingController@store');
 $router->put('/listings/{id}', 'ListingController@update');
 $router->delete('/listings/{id}', 'ListingController@destroy');
 
+// Auth
+$router->get('/auth/register', 'UserController@create');
+$router->get('/auth/login', 'UserController@login');
+
+
+
 // $router->get('/', 'controllers/home.php');
 // $router->get('/listings', 'controllers/listings/index.php');
 // $router->get('/listings/create', 'controllers/listings/create.php');
