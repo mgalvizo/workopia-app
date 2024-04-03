@@ -151,5 +151,78 @@ class UserController {
 
     redirect('/');
   }
+
+  /**
+   * Authenticate user with email and password
+   * 
+   * @return void
+   * 
+   */
+  public function authenticate() {
+    // Get the data
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $errors = [];
+
+    // Validation
+    if (!Validation::email($email)) {
+      $errors['email'] = 'Please enter a valid email';
+    }
+
+    if (!Validation::string($password, 6, 50)) {
+      $errors['password'] = 'Password must be at least 6 characters';
+    }
+
+    // Check for errors
+    if (!empty($errors)) {
+      loadView('users/login', [
+        'errors' => $errors
+      ]);
+      exit;
+    }
+
+    // Check for email
+    // anything that is user input is going to be a named parameter and will be put into a $params array
+    // $params then will be passed to the query
+    $params = [
+      'email' => $email
+    ];
+
+    // Check if user exists
+    $user = $this->db->query('SELECT * FROM users WHERE email = :email', $params)->fetch();
+
+    if (!$user) {
+      $errors['email'] = 'Incorrect credentials';
+
+      loadView('users/login', [
+        'errors' => $errors
+      ]);
+      exit;
+    }
+
+    // Check if password is correct
+    // password_verify verifies that a password matches a hash
+    if (!password_verify($password, $user->password)) {
+      $errors['password'] = 'Incorrect credentials';
+
+      loadView('users/login', [
+        'errors' => $errors
+      ]);
+      exit;
+    }
+
+    // Set user session
+    // Add entries to SESSION
+    Session::set('user', [
+      'id' => $user->id,
+      'name' => $user->name,
+      'email' => $user->email,
+      'city' => $user->city,
+      'state' => $user->state,
+    ]);
+
+    redirect('/');
+  }
 }
 ?>
