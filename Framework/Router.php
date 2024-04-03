@@ -102,6 +102,12 @@ class Router {
     $requestMethod = $_SERVER['REQUEST_METHOD'];
     // inspectAndDie(($method));
 
+    // Check for _method hidden input
+    if ($requestMethod === 'POST' && isset($_POST['_method'])) {
+      // Override the request method with the value of _method
+      $requestMethod = strtoupper($_POST['_method']);
+    }
+
     foreach($this->routes as $route) {
       // Split the current uri into segments
       // trim strips whitespace (or other characters) from the beginning and end of a string
