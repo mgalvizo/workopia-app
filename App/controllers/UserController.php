@@ -131,5 +131,25 @@ class UserController {
 
     redirect('/');
   }
+
+  /**
+   * Logout a user and kill session
+   * 
+   * @return void
+   * 
+   */
+  public function logout() {
+    Session::clearAll();
+
+    // Remove cookie
+    // session_get_cookie_params gets the session cookie parameters
+    // setcookie sends a cookie
+    $params = session_get_cookie_params();
+    // PHPSESSID is automatically created by this app when starting the session
+    // Set a value of an empty string, an expiration in the past, and the path and params that we got from the cookie previously
+    setcookie('PHPSESSID', '', time() - 86400, $params['path'], $params['domain']);
+
+    redirect('/');
+  }
 }
 ?>
