@@ -96,7 +96,7 @@ class ListingController {
     $newListingData = array_map('sanitize', $newListingData);
     // inspectAndDie($newListingData);
 
-    $requiredFields = ['title', 'description', 'email', 'city', 'state'];
+    $requiredFields = ['title', 'description', 'salary', 'email', 'city', 'state'];
 
     $errors = [];
 
@@ -121,7 +121,42 @@ class ListingController {
       ]);
     } else {
       // Submit data
-      echo 'Success';
+      
+      $fields = [];
+
+      // Add all fields as an array
+      foreach($newListingData as $field => $value) {
+        $fields[] = $field;
+      }
+
+      // Create a comma separated string with every field for the query
+      $fields = implode(', ', $fields);
+      // inspect($fields);
+
+      $values = [];
+
+      // Add all values to array
+      foreach($newListingData as $field => $value) {
+        // Convert empty strings into null
+        if ($value === '') {
+          $newListingData[$field] = null;
+        }
+        
+        // Create array with value placeholder data for query
+        $values[] = ':' . $field;
+      }
+
+      // Create a comma separated string with every value placeholder for the query
+      $values = implode(', ', $values);
+      inspect($values);
+
+      $query = "INSERT INTO listings ({$fields}) VALUES ({$values})";
+      
+      // Pass the query with the placeholders and the actual data to the execute the actual query
+      $this->db->query($query, $newListingData);
+
+      // Redirect
+      redirect('/listings');
     }
   }
 }
