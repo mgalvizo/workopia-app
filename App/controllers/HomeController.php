@@ -22,7 +22,7 @@ class HomeController {
    */
   public function index() {
     // Fetch the listings
-    $listings = $this->db->query('SELECT * FROM listings LIMIT 6')->fetchAll();
+    $listings = $this->db->query('SELECT * FROM listings ORDER BY created_at DESC LIMIT 6')->fetchAll();
     // inspect($listings);
 
     // Loads and passes the listings to the view 

@@ -81,6 +81,37 @@ class Session {
     // session_destroy destroys all data registered to a session
     session_destroy();
   }
+
+  /**
+   * Set a flash message
+   * 
+   * @param string $key
+   * @param string $message
+   * @return void
+   * 
+   */
+  public static function setFlashMessage($key, $message) {
+    // We use self to refer to a static method of the own class
+    self::set("flash_{$key}", $message);
+  }
+
+  /**
+   * Get a flash message and unset
+   * 
+   * @param string $key
+   * @param mixed $default
+   * @return string
+   * 
+   */
+  public static function getFlashMessage($key, $default = null) {
+    // Get the message (all messages are prefixed with 'flash_')
+    $message = self::get("flash_{$key}", $default);
+
+    // Immediately unset the message
+    self::clear("flash_{$key}");
+    
+    return $message;
+  }
 }
 ?>
 
