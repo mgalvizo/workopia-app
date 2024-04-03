@@ -149,7 +149,8 @@ class ListingController {
       // Create a comma separated string with every value placeholder for the query
       $values = implode(', ', $values);
       inspect($values);
-
+      
+      // $fields and $values are transformation resulting in strings for the SQL syntax
       $query = "INSERT INTO listings ({$fields}) VALUES ({$values})";
       
       // Pass the query with the placeholders and the actual data to the execute the actual query
@@ -301,6 +302,7 @@ class ListingController {
       $updateFields = implode(', ', $updateFields);
       // inspect($updateFields);
 
+      // $updateFields is a transformed string to satisfy SQL syntax
       $updateQuery = "UPDATE listings SET $updateFields WHERE id = :id";
       // inspectAndDie($updateQuery);
       
