@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use Framework\Database;
 use Framework\Validation;
+use Framework\Session;
 
 class UserController {
   protected $db;
@@ -112,6 +113,21 @@ class UserController {
     ];
 
     $this->db->query('INSERT INTO users (name, email, city, state, password) VALUES (:name, :email, :city, :state, :password)', $params);
+
+    // Get new user ID
+    // PDO::lastInsertId returns the ID of the last inserted row or sequence value 
+    $userId = $this->db->conn->lastInsertId();
+
+    // Add entries to SESSION
+    Session::set('user', [
+      'id' => $userId,
+      'name' => $name,
+      'email' => $email,
+      'city' => $city,
+      'state' => $state,
+    ]);
+
+    // inspectAndDie(Session::get('user'));
 
     redirect('/');
   }
