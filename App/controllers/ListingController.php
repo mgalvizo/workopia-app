@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 // Using the namespace
 use Framework\Database;
+use Framework\Validation;
 
 class ListingController {
   protected $db;
@@ -68,6 +69,60 @@ class ListingController {
     loadView('listings/show', [
       'listing' => $listing
     ]);
+  }
+
+  /**
+   * Store data in database
+   * 
+   * @return void
+   * 
+   */
+  public function store() {
+    // inspectAndDie($_POST);
+
+    // Fields from the create job listing form for SECURITY
+    $allowedFields = ['title', 'description', 'salary', 'tags', 'company', 'address', 'city', 'state', 'phone', 'email', 'requirements', 'benefits'];
+
+    // array_intersect_key computes the intersection of arrays using keys for comparison
+    // array_intersect_key() returns an array containing all the entries of array which have keys that are present in all the arguments.
+    // In this case array_intersect_key() will return only the allowed fields
+    // array_flip exchanges all keys with their associated values in an array, in this case the index with value
+    $newListingData = array_intersect_key($_POST, array_flip($allowedFields));
+
+    // Temporary hardcoded test data
+    $newListingData['user_id'] = 1;
+
+    // array_map applies the callback to the elements of the given arrays
+    $newListingData = array_map('sanitize', $newListingData);
+    // inspectAndDie($newListingData);
+
+    $requiredFields = ['title', 'description', 'email', 'city', 'state'];
+
+    $errors = [];
+
+    // Implement validation for all required fields
+    // empty determines whether a variable is empty
+    foreach ($requiredFields as $field) {
+      if (empty($newListingData[$field]) || !Validation::string($newListingData[$field])) {
+        // Add an entry to the errors array with a message
+        // ucfirst makes a string's first character uppercase
+        $errors[$field] = ucfirst($field) . ' is required';
+      }
+    }
+
+    // inspectAndDie($errors);
+    if (!empty($errors)) {
+      // Reload view with error data
+      loadView('listings/create', [
+        'errors' => $errors,
+        // Pass the data so we do NOT lose any current filled fields in the form
+        // Since this are not fetched with PDO we can access the values with []
+        'listing' => $newListingData
+      ]);
+    } else {
+      // Submit data
+      echo 'Success';
+    }
   }
 }
 ?>

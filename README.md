@@ -21,3 +21,7 @@ PHP app that implements the following:
 - Simple autoloader
 - Composer
 - psr-4 for better autoloading
+- Form handling
+- Validations
+- CRUD operations
+- Flash messages
