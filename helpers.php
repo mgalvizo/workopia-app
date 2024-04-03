@@ -35,15 +35,19 @@ function loadView($name, $data = []) {
 /**
  * Load a partial
  * @param string $name
+ * @param array $data
  * @return void
  * 
  */
-function loadPartial($name) {
+function loadPartial($name, $data = []) {
 
   $partialPath = basePath("App/views/partials/{$name}.php");
 
   // file_exists checks whether a file or directory exists
   if (file_exists($partialPath)) {
+    // extract imports variables into the current symbol table from an array
+    // Makes easy to pass data into the view
+    extract($data);
     require $partialPath;
   } else {
     echo "Partial '{$name}' not found!";

@@ -119,6 +119,7 @@ class ListingController {
         // Since this are not fetched with PDO we can access the values with []
         'listing' => $newListingData
       ]);
+      exit;
     } else {
       // Submit data
       
@@ -284,7 +285,7 @@ class ListingController {
         // Since this are not fetched with PDO we can access the values with []
         'listing' => $listing
       ]);
-      // exit;
+      exit;
     } else {
       // Submit data
       
