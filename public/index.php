@@ -1,6 +1,8 @@
 <!-- ENTRY POINT FILE FOR THE APP -->
 <!-- Make sure the configuration of your auto.workopia-app.test.conf includes the public folder as Document Root -->
 <?php
+// Needed for flash messages
+session_start();
 require __DIR__ . '/../vendor/autoload.php';
 // Helpers is available for the whole app
 require '../helpers.php';
