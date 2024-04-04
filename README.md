@@ -25,3 +25,6 @@ PHP app that implements the following:
 - Validations
 - CRUD operations
 - Flash messages
+- Middleware
+- Authorization
+- Protection
